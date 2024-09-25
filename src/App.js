@@ -3,11 +3,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar/Navbar';
 import { ProductList } from './components/product/Productlist';
 import { CartPage } from './components/cartpage/Cartpage';
-import { UserProvider } from './context/AuthContext';
+import { ReducerProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <UserProvider>
+    <ReducerProvider>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -15,7 +15,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} /> 
         </Routes>
       </BrowserRouter>
-    </UserProvider>
+    </ReducerProvider>
   );
 }
 

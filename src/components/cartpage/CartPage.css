@@ -6,8 +6,27 @@
     font-size: 1.8rem;
     margin-bottom: 20px;
   }
-  
+  .button-items {
+    display: flex;
+    justify-content: space-between;
+  }
+  .button-items .backbutton{
+    padding: 10px 20px;
+    background-color: darkgreen;
+    border: none;
+    color: white;
+  }
+  .button-items .Deletebutton{
+    padding: 10px 20px;
+    background-color: red;
+    border: none;
+    color: white;
+  }
+
   .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
@@ -41,4 +60,45 @@
     font-size: 1rem;
     color: #666;
   }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
   
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .modal-actions button {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .model-remove {
+    background-color: red;
+    border: none;
+  }
+  .model-unremove {
+    background-color: green;
+    border: none;
+  }

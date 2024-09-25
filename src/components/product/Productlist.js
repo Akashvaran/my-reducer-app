@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { UserContext } from '../../context/AuthContext';
+import { ReducerContext} from '../../context/AuthContext';
 import './ProductList.css'
 
 export const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const { dispatch } = useContext(UserContext); 
+  const { dispatch } = useContext(ReducerContext); 
 
 
   useEffect(() => {

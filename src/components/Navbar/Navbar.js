@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../context/AuthContext';
+import { ReducerContext} from '../../context/AuthContext';
 import { BsCart4 } from "react-icons/bs";
 import './Navbar.css'
 
 export const Navbar = () => {
-  const { cart } = useContext(UserContext);
+  const { cart } = useContext(ReducerContext);
 
   return (
     <nav className="navbar">
