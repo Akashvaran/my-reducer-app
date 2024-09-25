@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 export const CartPage = () => {
   const { cart, dispatch } = useContext(ReducerContext);
-  const [showModal, setShowModal] = useState(false);
+  const [showRemoveItemModal, setShowRemoveItemModal] = useState(false);
+  const [showClearCartModal, setShowClearCartModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const removeFromCart = (product) => {
@@ -15,21 +16,19 @@ export const CartPage = () => {
     });
   };
 
-
   const handleRemoveClick = (product) => {
     setSelectedProduct(product);
-    setShowModal(true);
+    setShowRemoveItemModal(true);
   };
-
 
   const handleModalConfirm = () => {
     removeFromCart(selectedProduct);
-    setShowModal(false);
+    setShowRemoveItemModal(false);
   };
 
-
   const handleModalCancel = () => {
-    setShowModal(false);
+    setShowRemoveItemModal(false);
+    setShowClearCartModal(false);
   };
 
   const increaseQuantity = (product) => {
@@ -50,45 +49,78 @@ export const CartPage = () => {
     dispatch({
       type: 'REMOVE_ALL_FROM_CART',
     });
+    setShowClearCartModal(false);
   };
+
+
+  const totalPrice = cart.reduce((val, item) => val + item.price * item.quantity, 0);
 
   return (
     <div className="cart-page">
-      <div className='button-items'>
-        <Link to={'/'}><button className='backbutton'>Back</button></Link>
-        <button className='Deletebutton' onClick={removeAllFromCart}>Remove All</button>
+      <div className="button-items">
+        <Link to={'/'}>
+          <button className="backbutton">Back</button>
+        </Link>
+        <button className="Deletebutton" onClick={() => setShowClearCartModal(true)}>
+          Remove All
+        </button>
       </div>
 
       <h2>Your Cart</h2>
       {cart.length === 0 ? (
         <p>Please add products</p>
       ) : (
-        cart.map((item) => (
-          <div key={item.id} className="cart-item">
-            <h3>{item.title}</h3>
-            <p>Price: ${item.price}</p>
-            <p>Quantity: {item.quantity}</p>
+        <>
+          {cart.map((item) => (
+            <div key={item.id} className="cart-item">
+              <h3>{item.title}</h3>
+              <p>Price: {item.price}</p>
 
-            <div className="quantity-controls">
-              <button onClick={() => decreaseQuantity(item)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => increaseQuantity(item)}>+</button>
+              <div className="quantity-controls">
+                <button onClick={() => decreaseQuantity(item)}>-</button>
+                <span>{item.quantity}</span>
+                <button onClick={() => increaseQuantity(item)}>+</button>
+              </div>
+
+              <p>Total: {(item.price * item.quantity).toFixed(2)}</p>
+
+              <button onClick={() => handleRemoveClick(item)}>Remove</button>
             </div>
+          ))}
 
-
-            <button onClick={() => handleRemoveClick(item)}>Remove</button>
-          </div>
-        ))
+          <h3 className="total-price">Total Price: ${totalPrice.toFixed(2)}</h3>
+        </>
       )}
 
 
-      {showModal && (
+      {showRemoveItemModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Are you sure you want to remove this product?</h3>
             <div className="modal-actions">
-              <button className='model-remove' onClick={handleModalConfirm}>Yes</button>
-              <button className='model-unremove' onClick={handleModalCancel}>No</button>
+              <button className="model-remove" onClick={handleModalConfirm}>
+                Yes
+              </button>
+              <button className="model-unremove" onClick={handleModalCancel}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+      {showClearCartModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Are you sure you want to clear the cart?</h3>
+            <div className="modal-actions">
+              <button className="model-remove" onClick={removeAllFromCart}>
+                Yes
+              </button>
+              <button className="model-unremove" onClick={handleModalCancel}>
+                No
+              </button>
             </div>
           </div>
         </div>
@@ -96,4 +128,5 @@ export const CartPage = () => {
     </div>
   );
 };
+
 
